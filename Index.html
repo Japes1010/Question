@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I have a question...</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffe6e6;
+            overflow: hidden;
+            text-align: center;
+        }
+        h1 {
+            color: #d63031;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+            position: relative;
+            height: 60px;
+            width: 300px;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            padding: 12px 35px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.1s ease;
+        }
+        #yesBtn {
+            background-color: #2ecc71;
+            color: white;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+        }
+        #noBtn {
+            background-color: #e74c3c;
+            color: white;
+            position: absolute;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            user-select: none;
+        }
+        .celebration {
+            display: none;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+        .celebration h1 {
+            color: #2c3e50;
+        }
+        .hearts {
+            font-size: 5rem;
+            animation: pulse 1s infinite alternate;
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.15); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="question-container">
+        <!-- CUSTOMIZE YOUR QUESTION HERE -->
+        <h1>Will you go out on a date with me? ☕✨</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">Yes!</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+    </div>
+
+    <div id="celebration-container" class="celebration">
+        <div class="hearts">❤️🎉🥳</div>
+        <!-- CUSTOMIZE YOUR SUCCESS MESSAGE HERE -->
+        <h1>Yay! I'll message you details! See you! 🥰</h1>
+    </div>
+
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            
+            // Calculate random positions within the visible screen area
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            // Ensure values aren't negative
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            
+            // Switch to fixed positioning so it can run anywhere on the screen
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function celebrate() {
+            document.getElementById('question-container').style.display = 'none';
+            document.getElementById('celebration-container').style.display = 'block';
+            
+            // Optional: Shoot emoji fireworks into the background
+            for (let i = 0; i < 30; i++) {
+                createHeart();
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerText = '❤️';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.opacity = Math.random();
+            heart.style.transform = `rotate(${Math.random() * 360}deg)`;
+            heart.style.pointerEvents = 'none';
+            document.body.appendChild(heart);
+        }
+    </script>
+</body>
+</html>
